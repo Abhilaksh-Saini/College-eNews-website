@@ -3,7 +3,7 @@ import React from 'react';
 
 const Footer = () => (
     <footer style={footerStyle}>
-        <p>&copy; 2024 College E-News | <a href="/about" style={fstyle}>About</a> | <a href="info" style={fstyle}>Contact</a></p>
+        <p>&copy; 2024 College E-News | <a href="/about" style={fstyle}>About</a> | <a href="/contact" style={fstyle}>Contact</a></p>
     </footer>
 );
 
