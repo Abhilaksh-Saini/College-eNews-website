@@ -7,12 +7,14 @@ import Events from './components/Events';
 import Footer from './components/Footer';
 import About from './components/About';
 import Contact from './components/Contact';
+import Brochure from './components/Brochure';
 
 const App = () => { 
     return (
         <Router>
             <div className="App">
                 <Header />
+                
                 <main className="container">
                     <Routes>
                         <Route path="/" element={
@@ -24,6 +26,7 @@ const App = () => {
                         } />
                         <Route path="/about" element={<About />} />
                         <Route path="/contact" element={<Contact />} />
+                        <Route path="/brochure" element={<Brochure />} />
                     </Routes>
                 </main>
                 <Footer />
