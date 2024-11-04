@@ -1,45 +1,21 @@
 import React from 'react';
 import logo from '../assets/logo.png';
-
+import '../Css/header.css';
 const Header = () => (
-    <header style={headerStyle}>
-        <div style={logoStyle}>
+    <header>
+        <div className='logo'>
             <img src={logo} alt="College Logo" style={{ width: '140px', height: '60px' , paddingLeft:'40px'}} />
         </div>
         <nav>
-            <ul style={navStyle}>
-                <li><a href="/" style={linkStyle}>Home</a></li>
-                <li><a href="/news" style={linkStyle}>News</a></li>
-                <li><a href="/events" style={linkStyle}>Events</a></li>
+            <ul className='nav'>
+                <li><a href="/" className='link'>Home</a></li>
+                <li><a href="/news" className='link'>News</a></li>
+                <li><a href="/events" className='link'>Events</a></li>
+                <li><a href="/brochure" className='link'>Info-Brochure</a></li>
             </ul>
         </nav>
     </header>
 );
 
-const headerStyle = {
-    backgroundColor: '#004080',
-    color: 'white',
-    padding: '1rem',
-    textAlign: 'center'
-};
-
-const logoStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-};
-
-const navStyle = {
-    listStyle: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '1.5rem',
-};
-
-const linkStyle = {
-    color: 'white',
-    textDecoration: 'none',
-};
 
 export default Header;

@@ -1,22 +1,12 @@
 import React from 'react';
-
+import '../Css/footer.css'
 
 const Footer = () => (
-    <footer style={footerStyle}>
-        <p>&copy; 2024 College E-News | <a href="/about" style={fstyle}>About</a> | <a href="/contact" style={fstyle}>Contact</a></p>
+    <footer className='footer'>
+        <p>&copy; 2024 College E-News | <a href="/about" className='footer-link1'>About</a> | <a href="/contact" className='footer-link2'>Contact</a></p>
     </footer>
 );
 
-const footerStyle = {
-    backgroundColor: '#333',
-    color: 'white',
-    textAlign: 'center',
-    padding: '1rem',
-    marginTop: '2rem'
-};
-const fstyle ={
-    color: 'white',
-    textDecoration: 'none'
-}
+
 
 export default Footer;
