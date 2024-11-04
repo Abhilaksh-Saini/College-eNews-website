@@ -7,6 +7,7 @@ import Events from './components/Events';
 import Footer from './components/Footer';
 import About from './components/About';
 import Contact from './components/Contact';
+import Gallery from './components/Gallery';
 
 const App = () => { 
     return (
@@ -20,6 +21,7 @@ const App = () => {
                                 <FeaturedNews />
                                 <LatestNews />
                                 <Events />
+                                <Gallery/>
                             </>
                         } />
                         <Route path="/about" element={<About />} />
