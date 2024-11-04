@@ -20,7 +20,8 @@ const headerStyle = {
     backgroundColor: '#004080',
     color: 'white',
     padding: '1rem',
-    textAlign: 'center'
+    textAlign: 'center',
+    border: '10px solid black'
 };
 
 const logoStyle = {
