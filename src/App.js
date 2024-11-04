@@ -10,6 +10,8 @@ import Contact from './components/Contact';
 import Brochure from './components/Brochure';
 import Gallery from './components/Gallery';
 import Semester from './components/News1';
+import FS from './components/FullStack';
+import Symbitech from './components/SymbiTech';
 
 const App = () => { 
     return (
@@ -31,6 +33,8 @@ const App = () => {
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/brochure" element={<Brochure />} />
                         <Route path="/news1" element={<Semester />} />
+                        <Route path="/fullstack-event" element={<FS />} />
+                        <Route path='/symbitech-event' element={<Symbitech />}/>
                     </Routes>
                 </main>
                 <Footer />
