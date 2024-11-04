@@ -1,34 +1,18 @@
 // src/components/Brochure.js
 import React from 'react';
-
+import '../Css/brochure.css'
 const Brochure = () => {
     const brochureUrl = "/brochure.pdf";
 
     return (
-        <div style={brochureContainerStyle}>
+        <div className='brochure-container'>
             <h2>Download Our Brochure</h2>
             <h4>SIT Central Information Brochure</h4>
-            <a href={brochureUrl} download style={buttonStyle}>
+            <a href={brochureUrl} download className='button1'>
                 Download Brochure
             </a>
         </div>
     );
-};
-
-const brochureContainerStyle = {
-    textAlign: 'center',
-    margin: '2rem 0',
-};
-
-const buttonStyle = {
-    padding: '0.5rem 1rem',
-    backgroundColor: '#004080',
-    color: 'white',
-    border: 'none',
-    borderRadius: '5px',
-    textDecoration: 'none',
-    fontSize: '1rem',
-    cursor: 'pointer',
 };
 
 export default Brochure;
