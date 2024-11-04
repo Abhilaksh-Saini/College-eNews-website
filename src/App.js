@@ -22,6 +22,7 @@ const App = () => {
                                 <FeaturedNews />
                                 <LatestNews />
                                 <Events />
+                                <Gallery/>
                             </>
                         } />
                         <Route path="/about" element={<About />} />
