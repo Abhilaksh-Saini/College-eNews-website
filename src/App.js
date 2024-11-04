@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import About from './components/About';
 import Contact from './components/Contact';
 import Brochure from './components/Brochure';
+import Gallery from './components/Gallery';
 
 const App = () => { 
     return (
