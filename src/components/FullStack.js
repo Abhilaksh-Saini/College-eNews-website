@@ -3,13 +3,11 @@ import React from 'react';
 function FS() {
   return (
     <div>
-      <section>
         <h1 style={{ padding: '0.5rem', textAlign: 'center' }}><i>Introduction to Full Stack Development Workshop</i></h1>
         <p style={{ padding: '0.5rem', textAlign: 'center' }}>
           Full stack development has become a critical skill in the tech industry, combining front-end and back-end expertise to build complete software solutions. 
           The Codex Event covered the essentials of this discipline, from web architecture to frameworks like Python Flask and React.js.
         </p>
-      </section>
 
       <section>
         <h2>Basic Architecture of Web Applications</h2>

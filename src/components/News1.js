@@ -3,15 +3,16 @@ import React from 'react';
 const Semester = () => {
     return (
         <div style={{ padding: '2rem', textAlign: 'center' }}>
-            <section>
+            
             <h1><i>ODD-Semester 2024 details and SIT benefits</i></h1>
+           <section>
             <p>Details about semester start, student guidelines, and more.</p>
             <p>Time-period of Semester- July, 2024 to December, 2024</p>
             <p>Registration and Session Commencement (Second, Third, Final year B.Tech and M.Tech)- 4th July, 2024</p>
             <p>Registration and Session Commencement (Second Year Lateral Entry)- 1 August, 2024</p>
             <p>Induction of first-years- 1-7 August, 2024</p>
             <p>Registration and Session Commencement (First-years)- 8 August, 2024</p>
-            </section>
+            </section> 
 
             <section>
             <div style={{ padding: '2rem', textAlign: 'left' }}>
