@@ -5,14 +5,9 @@ const LatestNews = () => (
         <h2>Latest News</h2>
         <div className="news-list">
             <div className="news-item">
-                <h3>News Title</h3>
-                <p>Brief description of the news item.</p>
-                <a href="/news">Read more</a>
-            </div>
-            <div className="news-item">
-                <h3>Another News Title</h3>
-                <p>Brief description of the news item.</p>
-                <a href="/news">Read more</a>
+                <h3>End-Sem Exam Details</h3>
+                <p>Exam time table and more.</p>
+                <a href="/end-sem-news">Read more</a>
             </div>
         </div>
     </section>
