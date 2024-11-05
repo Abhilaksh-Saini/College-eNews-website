@@ -6,7 +6,7 @@ const FeaturedNews = () => (
         <div className="news-item">
             <h3>Welcome to the New Semester!</h3>
             <p>Details about semester start, student guidelines, and more.</p>
-            <a href="/news">Read more</a>
+            <a href="/news1">Read more</a>
         </div>
     </section>
 );
