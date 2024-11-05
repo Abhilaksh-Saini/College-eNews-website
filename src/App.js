@@ -12,6 +12,21 @@ import Gallery from './components/Gallery';
 import Semester from './components/News1';
 import FS from './components/FullStack';
 import Symbitech from './components/SymbiTech';
+import ExamTimetable from './components/EndSemDetails';
+
+const NewsPage = () => (
+    <div>
+        <section><Semester /></section>
+        <section><ExamTimetable /></section>
+    </div>
+);
+
+const EventsPage = () =>(
+    <div>
+        <section><FS /></section>
+        <section><Symbitech /></section>
+    </div>
+)
 
 const App = () => { 
     return (
@@ -35,7 +50,10 @@ const App = () => {
                         <Route path="/news1" element={<Semester />} />
                         <Route path="/fullstack-event" element={<FS />} />
                         <Route path='/symbitech-event' element={<Symbitech />}/>
-                    </Routes>
+                        <Route path='/end-sem-news' element={<ExamTimetable />}/>
+                        <Route path="/news" element={<NewsPage />} />
+                        <Route path="/events" element={<EventsPage />} />
+                    </Routes>   
                 </main>
                 <Footer />
             </div>
