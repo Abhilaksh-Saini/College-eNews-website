@@ -1,0 +1,22 @@
+.FCC{
+    /* height : 100%;
+    width : 100%;
+    background-color: white;
+    border: 5px solid black; */
+    /* padding: px; */
+    position:relative;
+    top: 10px;
+    left: 20px;
+    height: 830px;
+    
+
+    width : 1200px;
+    background-color: white;
+    border: 2px solid #b30000;
+    border-radius: 8%;
+}
+.data1{
+    width: 98%;
+    position:relative;
+    left:10px;
+}

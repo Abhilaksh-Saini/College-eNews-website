@@ -1,0 +1,7 @@
+.data{
+    text-align: center;
+    margin: 2rem 0;
+    border: 2px solid black;
+    background-color: white;
+    border-radius: 50px;
+}

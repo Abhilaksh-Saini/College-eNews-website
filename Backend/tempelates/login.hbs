@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log-In</title>
+    <link rel="stylesheet" href="public/login.css" class="css">
+</head>
+<body>
+    <h2>Log In</h2>
+    <form action="/" method="post">
+        <input type="text" name="name" placeholder="Name">
+        <input type="password" name="password" placeholder="Password">
+        <input type="submit">
+    </form>
+    <p><a href="/signup">Make a New Account</a></p>
+    <p><a href="/forget-password">Forgot Password?</a></p>
+    <p><a href="/delete-account">Delete Account</a></p>
+    {{#if error}}
+        <script>alert("{{error}}")</script>
+    {{/if}}
+    
+    {{#if success}}
+        <script>alert("{{success}}")</script>
+    {{/if}}
+</body>
+</html>

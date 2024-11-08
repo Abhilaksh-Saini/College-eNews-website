@@ -1,0 +1,12 @@
+.App{
+    background-image: url('https://www.sitpune.edu.in/assets/images/student/gallery/sit-campus-1.jpg');
+    background-size: cover;
+}
+.n1{
+    /* border: 5px solid black; */
+    padding: 5px;
+}
+.n2{
+    padding: 5px;
+    /* border: 5px solid black; */
+}

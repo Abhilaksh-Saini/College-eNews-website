@@ -1,0 +1,13 @@
+.Gallery{
+    border: 2px solid black;
+    padding: 8px;
+    width: 800px;
+    background-color: white;
+    position: relative;
+    left: 225px
+}
+.img{
+    border: 2px solid black;
+    border-radius: 50%;
+    box-shadow: 5px; 
+}

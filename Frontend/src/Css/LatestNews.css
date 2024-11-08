@@ -1,0 +1,20 @@
+.latest{
+    position: relative;
+    left: 325px;
+    text-align : center;
+    border : 2px solid #b30000;
+    padding : 10px;
+    border-radius : 8px;
+    width: 600px;
+    box-shadow: 0 4px 8px rgba(179, 0, 0, 0.2);
+    background-color: white;
+}
+.h2{
+    padding: 5px;
+    border : 2px solid #b30000;
+    border-radius: 100px;
+    width : 300px;
+    position:relative;
+    left: 150px;
+    background-color: #fcf051;
+}
