@@ -25,5 +25,5 @@
  <li>Abhay Pandey:23070122010</li>
  <li>Abhilaksh Saini:23070122011</li>
  <li>Kushagra:23070122122</li>
- <li>Yash Pandye:23070122234</li>
+ <li>Yash Pandey:23070122234</li>
 </ul>
