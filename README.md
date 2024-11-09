@@ -1,6 +1,6 @@
 <h1>Project</h1>
 <br>
-<h2>Overview:</h2>h2>
+<h2>Overview:</h2>
 <br>
 <p>Our e-news website aims to deliver up-to-date news articles of our college symbiosis institute of technology in a user-friendly and organized format.This site provides a seamless reading experience for users interested in diverse news topics.</p>
 <br>
