@@ -11,6 +11,10 @@ export const NEWS_QUERIES = [
   '"SIT Pune"',
   'Symbiosis Pune engineering students',
   '"Symbiosis International" university',
+  // SIT rarely makes national rankings coverage, so these go looking for ground-level news:
+  // students' wins, placement drives and recruiters, which mostly run in local and trade press.
+  '"SIT Pune" OR "Symbiosis Institute of Technology" placement OR recruiters OR internship OR PPO',
+  '"SIT Pune" OR "Symbiosis Institute of Technology" hackathon OR wins OR award OR team OR startup',
 ];
 
 const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "" });

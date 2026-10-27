@@ -1,6 +1,7 @@
 import { CATEGORIES, categorize } from "./categorize";
 import { groqJson, hasGroq } from "./groq";
-import type { Category, Story, TechBrief, TechItem } from "./types";
+import type { PlacementDesk } from "./sources/sitPlacements";
+import type { Category, PlacementBrief, Story, TechBrief, TechItem } from "./types";
 
 const SLUGS = CATEGORIES.map((c) => c.slug);
 
@@ -83,6 +84,28 @@ export async function groqTechBrief(items: TechItem[]): Promise<TechBrief | null
     };
   } catch (err) {
     console.error("[brief] Groq tech brief failed:", err);
+    return null;
+  }
+}
+
+const PLACEMENT_SYSTEM = `You write the placements column of a student news site for Symbiosis Institute of Technology (SIT), Pune.
+You get SIT's own published placement figures and its season write-up as JSON. Write:
+- "headline": plain and specific, max 12 words, no colon, no hype
+- "paragraphs": 2 short paragraphs (each under 80 words) telling a current student what the numbers and recruiter mix say
+Rules: use ONLY the figures and company names given. Copy numbers exactly. If a year is marked ongoing, say its figures are not final. Do not compare SIT to other colleges or rank it. Do not invent salaries, counts or companies.
+Reply with JSON only.`;
+
+export async function groqPlacementBrief(desk: PlacementDesk | null): Promise<PlacementBrief | null> {
+  if (!hasGroq() || !desk || (!desk.years.length && !desk.season.length)) return null;
+  try {
+    const out = await groqJson<PlacementBrief>(
+      PLACEMENT_SYSTEM,
+      JSON.stringify({ years: desk.years, seasonReport: desk.season.join(" ").slice(0, 3500) }),
+    );
+    if (!out.headline || !Array.isArray(out.paragraphs) || !out.paragraphs.length) return null;
+    return { headline: String(out.headline), paragraphs: out.paragraphs.map(String).slice(0, 3) };
+  } catch (err) {
+    console.error("[placements] Groq brief failed:", err);
     return null;
   }
 }

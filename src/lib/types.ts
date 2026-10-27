@@ -45,6 +45,11 @@ export interface TechBrief {
   writtenBy: "groq" | "headlines";
 }
 
+export interface PlacementBrief {
+  headline: string;
+  paragraphs: string[];
+}
+
 export interface Edition {
   generatedAt: string;
   stories: Story[];
@@ -55,4 +60,7 @@ export interface Edition {
   /** Which sources answered this run, shown in the footer for transparency. */
   health: { source: string; ok: boolean; count: number }[];
   enrichedByAI: boolean;
+  /** Straight from SIT's own placement pages; null if they didn't answer. */
+  placements: import("./sources/sitPlacements").PlacementDesk | null;
+  placementBrief: PlacementBrief | null;
 }

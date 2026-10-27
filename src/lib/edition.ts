@@ -1,8 +1,9 @@
 import { unstable_cache } from "next/cache";
 import { dedupe } from "./categorize";
-import { groqEnrich, groqTechBrief } from "./enrich";
+import { groqEnrich, groqPlacementBrief, groqTechBrief } from "./enrich";
 import { fetchGoogleNews } from "./sources/googleNews";
 import { fetchSitNotices } from "./sources/sitOfficial";
+import { fetchPlacementDesk, type PlacementDesk } from "./sources/sitPlacements";
 import { getCuratedSocial } from "./sources/social";
 import { fetchTech } from "./sources/tech";
 import { fetchYouTube } from "./sources/youtube";
@@ -27,18 +28,21 @@ async function settle<T>(source: string, run: () => Promise<T[]>, health: Editio
 async function buildEdition(): Promise<Edition> {
   const health: Edition["health"] = [];
 
-  const [press, notices, videos, tech] = await Promise.all([
+  const [press, notices, videos, tech, desks] = await Promise.all([
     settle<Story>("Google News", fetchGoogleNews, health),
-    settle<Story>("sitpune.edu.in", fetchSitNotices, health),
+    settle<Story>("sitpune.edu.in notices", fetchSitNotices, health),
     settle<Story>("YouTube", fetchYouTube, health),
     settle<TechItem>("Tech headlines", fetchTech, health),
+    settle<PlacementDesk>("SIT placement pages", async () => [await fetchPlacementDesk()], health),
   ]);
+  const placements = desks[0] ?? null;
   const social = getCuratedSocial();
   health.push({ source: "Curated social", ok: true, count: social.length });
 
-  const [{ stories: enriched, usedAI }, brief] = await Promise.all([
+  const [{ stories: enriched, usedAI }, brief, placementBrief] = await Promise.all([
     groqEnrich(dedupe(press)),
     groqTechBrief(tech),
+    groqPlacementBrief(placements),
   ]);
 
   // Low-relevance listicles stay out unless there's almost nothing else to show.
@@ -58,6 +62,8 @@ async function buildEdition(): Promise<Edition> {
     brief,
     health,
     enrichedByAI: usedAI,
+    placements,
+    placementBrief,
   };
 }
 
@@ -65,7 +71,7 @@ async function buildEdition(): Promise<Edition> {
  * One cached edition shared by every page, so a regeneration fetches each source and calls
  * Groq once, no matter how many routes are being rebuilt.
  */
-const cachedEdition = unstable_cache(buildEdition, ["edition-v2"], {
+const cachedEdition = unstable_cache(buildEdition, ["edition-v3"], {
   revalidate: EDITION_TTL,
   tags: [EDITION_TAG],
 });
