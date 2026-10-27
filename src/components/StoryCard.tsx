@@ -38,14 +38,14 @@ export function StoryCard({
             <span className="hl">{story.title}</span>
             {story.kind === "video" && <span className="visually-hidden"> (video)</span>}
           </h3>
-          {story.dek && size !== "sm" && <p className={styles.dek}>{story.dek}</p>}
+          {story.dek && (size !== "sm" || story.via) && <p className={styles.dek}>{story.dek}</p>}
           <p className="meta">
             <span className={styles.section}>
               <span className={styles.dot} style={{ background: INKS[story.category][0] }} aria-hidden="true" />
               {NAMES[story.category]}
             </span>
             {", "}
-            {story.outlet}
+            {story.via ? `Source: ${story.via} by ${story.outlet}` : story.outlet}
             {story.campus ? `, ${story.campus} campus` : ""}
             {", "}
             <time dateTime={story.publishedAt}>{ago(story.publishedAt)}</time>

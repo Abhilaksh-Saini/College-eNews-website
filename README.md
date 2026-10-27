@@ -12,7 +12,8 @@ It's version 2 of our college e-news project. The original React + Express site 
 | *On the notice board* | Announcements on [sitpune.edu.in](https://www.sitpune.edu.in/) | Free |
 | *Watch* | SIT Pune's YouTube channel feed | Free, no key |
 | *Tech Pulse* | Hacker News API and Google News' India technology section, with a short brief written by Llama 3.3 on Groq | Free; Groq is optional |
-| *Follow SIT where it posts* | SIT's Instagram, LinkedIn and YouTube accounts, plus posts you pick by hand | Free |
+| News from social posts | Instagram and LinkedIn posts you pick, rewritten as news with the post as source | Free |
+| *Placements desk* | SIT's own placement records, season report and recruiter list | Free |
 
 Every story links to its original source. The footer of each edition shows when it was built and which sources answered.
 
@@ -29,19 +30,22 @@ Without a key, the site still works: it sorts with keyword rules and shows the t
 
 An edition makes two small calls and is rebuilt at most every three hours, which sits well inside Groq's free tier, so the whole pipeline costs nothing. Set `GROQ_MODEL` to try another Groq model, such as `openai/gpt-oss-120b`.
 
-### Why Instagram and LinkedIn are hand-picked
+### Instagram and LinkedIn posts as news
 
-Neither network offers a free, permitted way for another site to read a college's posts, and scraping them breaks their terms and gets blocked. So the site links to SIT's accounts, and you can feature specific posts by adding them to [`content/social.json`](content/social.json):
+Neither network offers a free, permitted way for another site to read a college's posts automatically, and scraping them breaks their terms and gets blocked. So posts are picked by hand: paste a post into [`content/social.json`](content/social.json) and the site turns it into a short news story, crediting the post as its source.
 
 ```json
 {
-  "url": "https://www.instagram.com/p/XXXXXXXX/",
-  "title": "SIT team wins the Smart India Hackathon finals",
-  "account": "@symbiosis_sit",
+  "url": "https://www.linkedin.com/posts/sitpune_...",
+  "account": "SIT Pune",
   "date": "2026-10-20",
-  "category": "achievements"
+  "text": "Paste the post's caption here."
 }
 ```
+
+- `url` and `account` are required. `date`, `category` and `title` are optional.
+- `text` is the post's caption. For public Instagram posts the site can read the caption from the link preview, so it can be left out. LinkedIn usually hides posts from servers, so paste the text for those.
+- With a Groq key, the post is rewritten as a plain news headline and summary using only what the post says, and drops posts with no news in them (festival wishes, greetings). Without a key, the headline comes from the post's first full sentence.
 
 Commit the file and Vercel republishes the site within a minute.
 

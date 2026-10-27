@@ -39,8 +39,9 @@ export default async function AboutPage() {
               <strong>SIT&apos;s YouTube channel.</strong> The latest uploads, with their own thumbnails.
             </li>
             <li>
-              <strong>Instagram and LinkedIn.</strong> These networks don&apos;t let other sites read posts
-              automatically, so standout posts are picked by hand and linked back to the original.
+              <strong>Instagram and LinkedIn.</strong> Posts from SIT&apos;s accounts are picked by hand, since these
+              networks don&apos;t let other sites read them automatically. Each one is rewritten as a short news item
+              from the post&apos;s own words and credits the post as its source.
             </li>
             <li>
               <strong>Tech Pulse.</strong> Top stories from Hacker News and the Indian tech press.
@@ -52,7 +53,8 @@ export default async function AboutPage() {
             An open AI model (Meta&apos;s Llama 3.3, run on Groq&apos;s free API) sorts stories into sections, drops admission-portal listicles that only
             mention SIT in passing, and writes the one-line summary under each headline using only what the headline
             and the outlet&apos;s own snippet say. It also writes the short Tech Pulse brief from that day&apos;s
-            headlines. It doesn&apos;t write news about SIT. If something reads wrong, the original source is one
+            headlines, and rewrites hand-picked social posts as news using only what the post says. It doesn&apos;t
+            invent news about SIT. If something reads wrong, the original source is one
             click away.
           </p>
 
