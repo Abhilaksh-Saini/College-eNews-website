@@ -4,7 +4,7 @@ import type { TechBrief, TechItem } from "@/lib/types";
 import styles from "./TechPulse.module.css";
 
 /**
- * The tech section. With a Grok key it's a short written brief plus its sources;
+ * The tech section. With a Groq key it's a short written brief plus its sources;
  * without one it falls back to the raw headline list, so there's never an empty band.
  */
 export function TechPulse({
@@ -38,7 +38,7 @@ export function TechPulse({
                 ))}
               </div>
               <p className={styles.credit}>
-                Written by Grok from the headlines listed here. Open the sources before you quote anything.
+                Written by an AI model (Llama 3.3, run on Groq) from the headlines listed here. Open the sources before you quote anything.
               </p>
             </>
           ) : (

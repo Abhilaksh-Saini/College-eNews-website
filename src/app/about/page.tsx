@@ -8,7 +8,7 @@ export const revalidate = 10800;
 
 export const metadata: Metadata = {
   title: "How this works",
-  description: "Where The Hilltop's stories come from, how often it updates, and what Grok does and doesn't write.",
+  description: "Where The Hilltop's stories come from, how often it updates, and what the AI does and doesn't write.",
 };
 
 export default async function AboutPage() {
@@ -47,9 +47,9 @@ export default async function AboutPage() {
             </li>
           </ul>
 
-          <h2>What Grok does</h2>
+          <h2>What the AI does</h2>
           <p>
-            Grok, xAI&apos;s language model, sorts stories into sections, drops admission-portal listicles that only
+            An open AI model (Meta&apos;s Llama 3.3, run on Groq&apos;s free API) sorts stories into sections, drops admission-portal listicles that only
             mention SIT in passing, and writes the one-line summary under each headline using only what the headline
             and the outlet&apos;s own snippet say. It also writes the short Tech Pulse brief from that day&apos;s
             headlines. It doesn&apos;t write news about SIT. If something reads wrong, the original source is one
