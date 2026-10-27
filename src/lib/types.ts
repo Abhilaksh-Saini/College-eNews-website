@@ -26,6 +26,10 @@ export interface Story {
   /** Set when the story is about another Symbiosis campus (Hyderabad, Nagpur…). */
   campus?: string;
   image?: string;
+  /** Every picture attached to the source post, when there's more than one. */
+  images?: string[];
+  /** Whether the lead picture is a real photo or a designed graphic, as judged by the vision model. */
+  imageKind?: "photo" | "graphic";
   /** For stories written from a social post: "LinkedIn post", "Instagram post". Shown as the source. */
   via?: string;
 }
