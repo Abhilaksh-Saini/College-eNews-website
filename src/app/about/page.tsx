@@ -8,7 +8,7 @@ export const revalidate = 10800;
 
 export const metadata: Metadata = {
   title: "How this works",
-  description: "Where The Hilltop's stories come from, how often it updates, and what the AI does and doesn't write.",
+  description: "Where The Foothill's stories come from, how often it updates, and what the AI does and doesn't write.",
 };
 
 export default async function AboutPage() {
@@ -21,7 +21,7 @@ export default async function AboutPage() {
 
         <div className={styles.body}>
           <p className={styles.lede}>
-            The Hilltop is a student-built news site for Symbiosis Institute of Technology, Pune. Nobody types the
+            The Foothill is a student-built news site for Symbiosis Institute of Technology, Pune. Nobody types the
             stories in. Every few hours the site goes out, reads what&apos;s been published about SIT, and lays out a
             new edition.
           </p>

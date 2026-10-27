@@ -8,7 +8,7 @@ export function Footer({ edition }: { edition: Edition }) {
     <footer className={styles.foot}>
       <div className={`wrap ${styles.grid}`}>
         <div>
-          <p className={styles.name}>The Hilltop</p>
+          <p className={styles.name}>The Foothill</p>
           <p className={styles.note}>
             A student project, not an official publication of Symbiosis Institute of Technology. Every story links to
             its original source; headlines and summaries belong to the outlets that published them.

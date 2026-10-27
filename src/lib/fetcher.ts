@@ -1,5 +1,5 @@
 const UA =
-  "Mozilla/5.0 (compatible; TheHilltopBot/2.0; +https://github.com/mardromus/college-enews-website)";
+  "Mozilla/5.0 (compatible; TheFoothillBot/2.0; +https://github.com/mardromus/college-enews-website)";
 
 /**
  * fetch with a hard timeout. One slow source must never hold up the whole edition,

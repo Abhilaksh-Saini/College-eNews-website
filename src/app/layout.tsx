@@ -21,13 +21,13 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "The Hilltop · SIT Pune news",
-    template: "%s · The Hilltop",
+    default: "The Foothill · SIT Pune news",
+    template: "%s · The Foothill",
   },
   description:
     "News from Symbiosis Institute of Technology, Pune, gathered automatically from the press, the institute and its channels, every few hours.",
   openGraph: {
-    title: "The Hilltop",
+    title: "The Foothill",
     description: "News from SIT Pune, gathered automatically every few hours.",
     type: "website",
     locale: "en_IN",

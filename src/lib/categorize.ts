@@ -1,7 +1,7 @@
 import type { Category, Story } from "./types";
 
 export const CATEGORIES: { slug: Category; name: string; blurb: string }[] = [
-  { slug: "campus", name: "Campus", blurb: "Life on the Lavale hill: people, clubs, talks and the everyday." },
+  { slug: "campus", name: "Campus", blurb: "Life at the foot of the Lavale hill: people, clubs, talks and the everyday." },
   { slug: "achievements", name: "Wins", blurb: "Rankings, accreditations, awards and things SIT people built." },
   { slug: "placements", name: "Placements", blurb: "Recruiters, packages and internships." },
   { slug: "research", name: "Research", blurb: "Labs, papers, funded projects and partnerships." },

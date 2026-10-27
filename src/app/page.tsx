@@ -46,7 +46,7 @@ export default async function Home() {
         {featured.length > 0 && (
           <section className={`wrap ${styles.section}`} aria-labelledby="latest-h">
             <h2 id="latest-h" className={styles.h2}>
-              Latest from the hill
+              Latest from the foothill
             </h2>
             <div className={styles.grid}>
               {featured.map((s) => (

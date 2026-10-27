@@ -15,16 +15,16 @@ export function Masthead({ generatedAt, compact = false }: { generatedAt: string
           </p>
         </div>
 
-        <Link href="/" className={styles.nameLink} aria-label="The Hilltop, home">
+        <Link href="/" className={styles.nameLink} aria-label="The Foothill, home">
           <span className={styles.name} aria-hidden="true">
-            <span className={styles.plateBlue}>The Hilltop</span>
-            <span className={styles.platePink}>The Hilltop</span>
+            <span className={styles.plateBlue}>The Foothill</span>
+            <span className={styles.platePink}>The Foothill</span>
           </span>
         </Link>
 
         {!compact && (
           <p className={styles.tagline}>
-            News from Symbiosis Institute of Technology, up on the Lavale hill in Pune. Gathered from the
+            News from Symbiosis Institute of Technology, at the foot of the Lavale hill in Pune. Gathered from the
             press, the institute and its channels every few hours, each story linked to where it came from.
           </p>
         )}
