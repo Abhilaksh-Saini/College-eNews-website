@@ -1,4 +1,4 @@
-import { categorize } from "../categorize";
+import { categorize, dedupe } from "../categorize";
 import { hashId, stripHtml } from "../fetcher";
 import type { SocialPost } from "./social";
 
@@ -44,11 +44,13 @@ const KNOWN: Record<string, string> = {
 
 function accountFrom(url: string, title: string): string {
   const li = url.match(/linkedin\.com\/posts\/([^_/]+)_/i);
-  if (li) return KNOWN[li[1].toLowerCase()] ?? li[1].replace(/-/g, " ");
+  if (li) return KNOWN[li[1].toLowerCase()] ?? tidyName(li[1]);
+  const igUser = url.match(/instagram\.com\/([^/]+)\/(?:p|reel)\//i);
+  if (igUser) return KNOWN[igUser[1].toLowerCase()] ?? `@${igUser[1]}`;
   const ig = title.match(/^(.+?) on Instagram/i);
   if (ig) return ig[1].trim();
   const by = title.match(/^(.+?)(?:'s Post| on LinkedIn|\s[|–-]\s)/i);
-  return by ? by[1].trim() : /instagram/i.test(url) ? "Instagram" : "LinkedIn";
+  return by ? by[1].trim() : /instagram/i.test(url) ? "an SIT Instagram account" : "an SIT LinkedIn page";
 }
 
 /** Strips search-engine and network boilerplate down to the post's own words. */
@@ -60,6 +62,46 @@ function postText(r: TavilyResult): string {
     .trim()
     .slice(0, 2000);
 }
+
+/**
+ * LinkedIn post IDs are snowflake IDs: the top 41 bits are the posting time in milliseconds.
+ * That gives an exact date even when the search result has none.
+ */
+export function linkedInPostedAt(url: string): Date | null {
+  const m = url.match(/(?:activity|share|ugcPost)[-:](\d{18,20})/i);
+  if (!m) return null;
+  const ms = Number(BigInt(m[1]) >> BigInt(22));
+  const d = new Date(ms);
+  return ms > Date.UTC(2015, 0, 1) && ms < Date.now() + 864e5 ? d : null;
+}
+
+/**
+ * Instagram shortcodes are base64 media IDs, and media IDs carry their creation time in the top
+ * 41 bits (milliseconds since Instagram's epoch, 2011-08-24).
+ */
+export function instagramPostedAt(url: string): Date | null {
+  const m = url.match(/instagram\.com\/(?:[^/]+\/)?(?:p|reel)\/([A-Za-z0-9_-]{6,14})/);
+  if (!m) return null;
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+  let id = BigInt(0);
+  for (const ch of m[1]) id = id * BigInt(64) + BigInt(alphabet.indexOf(ch));
+  const ms = Number(id >> BigInt(23)) + 1314220021721;
+  return ms > Date.UTC(2015, 0, 1) && ms < Date.now() + 864e5 ? new Date(ms) : null;
+}
+
+/** "amruta yeravdekar ruikar a321322a5" -> "Amruta Yeravdekar Ruikar"; "sit mechanical" -> "SIT Mechanical". */
+function tidyName(raw: string): string {
+  const words = raw
+    .split(/[\s-]+/)
+    .filter((w, i, all) => !(i === all.length - 1 && /\d/.test(w) && w.length >= 6));
+  return words
+    .map((w) => w.replace(/^sitpune$/i, "SIT Pune").replace(/^sit(robotics|mechanical|civil|cse)$/i, (_, d) => `SIT ${d[0].toUpperCase()}${d.slice(1)}`))
+    .map((w) => (/^SIT /.test(w) ? w : /^(sit|ai|it|etc|e&tc|ieee|acm)$/i.test(w) ? w.toUpperCase().replace("ETC", "E&TC") : w[0].toUpperCase() + w.slice(1)))
+    .join(" ");
+}
+
+/** Older posts aren't news any more. */
+const MAX_AGE_DAYS = 120;
 
 export function toPosts(results: TavilyResult[]): SocialPost[] {
   const seen = new Set<string>();
@@ -74,7 +116,10 @@ export function toPosts(results: TavilyResult[]): SocialPost[] {
     seen.add(url);
 
     const network = /instagram/i.test(url) ? "Instagram" : "LinkedIn";
-    const date = r.published_date ? new Date(r.published_date) : null;
+    const fromId = linkedInPostedAt(r.url) ?? instagramPostedAt(r.url);
+    const fromSearch = r.published_date ? new Date(r.published_date) : null;
+    const date = fromId ?? (fromSearch && !isNaN(+fromSearch) ? fromSearch : null);
+    if (date && Date.now() - +date > MAX_AGE_DAYS * 864e5) continue;
     posts.push({
       id: hashId("social:" + url),
       title: text.split(/(?<=[.!?])\s+/).find((s) => s.length >= 30)?.slice(0, 140) ?? title.slice(0, 140),
@@ -85,7 +130,7 @@ export function toPosts(results: TavilyResult[]): SocialPost[] {
       via: `${network} post`,
       kind: "social",
       category: categorize(text),
-      publishedAt: (date && !isNaN(+date) ? date : new Date()).toISOString(),
+      publishedAt: (date ?? new Date()).toISOString(),
       // Found automatically, so slightly below hand-picked posts.
       relevance: 0.85,
     });
@@ -124,5 +169,6 @@ export async function discoverSocialPosts(): Promise<SocialPost[]> {
   const settled = await Promise.allSettled(QUERIES.map(search));
   const failures = settled.filter((s) => s.status === "rejected");
   if (failures.length === settled.length) throw (failures[0] as PromiseRejectedResult).reason;
-  return toPosts(settled.flatMap((s) => (s.status === "fulfilled" ? s.value : [])));
+  // The same event is often posted by several department pages; keep one copy.
+  return dedupe(toPosts(settled.flatMap((s) => (s.status === "fulfilled" ? s.value : [])))) as SocialPost[];
 }
