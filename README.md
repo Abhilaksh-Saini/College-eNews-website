@@ -1,4 +1,4 @@
-# The Hilltop
+# The Foothill
 
 A news site for **Symbiosis Institute of Technology, Pune** that fills itself. Every few hours it reads what's been published about SIT, sorts it into sections, and lays out a fresh edition — no one has to type stories in.
 
@@ -8,7 +8,7 @@ It's version 2 of our college e-news project. The original React + Express site 
 
 | Section | Where it comes from | Cost |
 | --- | --- | --- |
-| Lead story and *Latest from the hill* | Google News RSS searches for SIT Pune and Symbiosis | Free, no key |
+| Lead story and *Latest from the foothill* | Google News RSS searches for SIT Pune and Symbiosis | Free, no key |
 | *On the notice board* | Announcements on [sitpune.edu.in](https://www.sitpune.edu.in/) | Free |
 | *Watch* | SIT Pune's YouTube channel feed | Free, no key |
 | *Tech Pulse* | Hacker News API and Google News' India technology section, with a short brief written by Llama 3.3 on Groq | Free; Groq is optional |
@@ -68,7 +68,7 @@ visitor or daily cron ──► Vercel serves the cached page
    - `GROQ_API_KEY` — a free key from [console.groq.com/keys](https://console.groq.com/keys) (optional)
    - `TAVILY_API_KEY` — a free key from [app.tavily.com](https://app.tavily.com), so the site can find LinkedIn and Instagram posts
    - `CRON_SECRET` — any long random string, so only Vercel can trigger refreshes
-   - `NEXT_PUBLIC_SITE_URL` — your site's URL once you know it, e.g. `https://the-hilltop.vercel.app`
+   - `NEXT_PUBLIC_SITE_URL` — your site's URL once you know it, e.g. `https://the-foothill.vercel.app`
 4. Deploy. Every push to `main` redeploys automatically.
 
 All variables are listed in [`.env.example`](.env.example).
@@ -109,4 +109,4 @@ The original v1 site was built by:
 - Kushagra (23070122122)
 - Yash Pandey (23070122234)
 
-*The Hilltop is a student project and not an official publication of Symbiosis Institute of Technology.*
+*The Foothill is a student project and not an official publication of Symbiosis Institute of Technology.*
