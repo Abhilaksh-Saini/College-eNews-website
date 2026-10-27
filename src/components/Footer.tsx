@@ -15,7 +15,7 @@ export function Footer({ edition }: { edition: Edition }) {
           </p>
           <p className={styles.note}>
             <Link href="/about">How this site works</Link> ·{" "}
-            <a href="https://github.com/mardromus/college-enews-website">Source code</a>
+            <a href="https://github.com/mardromus/the-foothill">Source code</a>
           </p>
         </div>
 

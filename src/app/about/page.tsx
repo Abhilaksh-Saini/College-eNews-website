@@ -67,7 +67,7 @@ export default async function AboutPage() {
           <h2>Corrections</h2>
           <p>
             This isn&apos;t an official SIT publication. To correct or remove something, open an issue on{" "}
-            <a href="https://github.com/mardromus/college-enews-website/issues">the project&apos;s GitHub</a>.
+            <a href="https://github.com/mardromus/the-foothill/issues">the project&apos;s GitHub</a>.
           </p>
         </div>
       </main>

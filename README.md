@@ -62,7 +62,7 @@ visitor or daily cron ──► Vercel serves the cached page
 
 ## Deploy on Vercel (free Hobby plan)
 
-1. Go to [vercel.com/new](https://vercel.com/new) and import `mardromus/college-enews-website`.
+1. Go to [vercel.com/new](https://vercel.com/new) and import `mardromus/the-foothill`.
 2. Leave the framework as **Next.js** and the root directory as the repo root.
 3. Under **Environment Variables**, add:
    - `GROQ_API_KEY` — a free key from [console.groq.com/keys](https://console.groq.com/keys) (optional)
