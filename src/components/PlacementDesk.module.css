@@ -1,0 +1,207 @@
+.desk {
+  margin-top: clamp(48px, 7vw, 88px);
+}
+
+.head {
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 14px;
+  margin-bottom: 28px;
+}
+
+.h2 {
+  font-size: var(--step-3);
+  font-variation-settings: "wdth" 85;
+}
+
+.note {
+  margin-top: 6px;
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+.note a {
+  color: var(--ink);
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+.story {
+  display: grid;
+  gap: 14px;
+  max-width: 62ch;
+}
+
+.headline {
+  font-family: var(--font-display);
+  font-weight: 750;
+  font-variation-settings: "wdth" 82, "opsz" 72;
+  font-size: clamp(var(--step-2), 3vw, var(--step-3));
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.lead {
+  font-size: var(--step-1);
+  line-height: 1.55;
+}
+
+.para {
+  line-height: 1.65;
+}
+
+.credit {
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.more {
+  justify-self: start;
+  font-family: var(--font-display);
+  font-weight: 650;
+}
+
+/* Figures: a real table, with a bar per value scaled within its own column. */
+.figures {
+  background: #fff;
+  border-radius: 4px;
+  padding: 18px 20px 14px;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  min-width: 460px;
+}
+
+.caption {
+  text-align: left;
+  font-weight: 700;
+  font-size: 1rem;
+  padding-bottom: 12px;
+}
+
+.table th,
+.table td {
+  padding: 10px 8px;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--rule);
+}
+
+.table thead th {
+  font-weight: 600;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+
+.table tbody th {
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.table td {
+  width: 27%;
+}
+
+.flag {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--pink);
+  filter: brightness(0.8);
+}
+
+.barCell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bar {
+  height: 12px;
+  max-width: 70%;
+  background: var(--blue);
+  border-radius: 0 4px 4px 0;
+  transform-origin: left;
+  transition: filter 0.2s;
+}
+
+.barCell:hover .bar {
+  filter: brightness(1.15) saturate(1.1);
+}
+
+/* Unfinished seasons get a hatched fill so the difference doesn't rest on colour alone. */
+.ongoing {
+  background: repeating-linear-gradient(135deg, var(--blue) 0 3px, transparent 3px 6px);
+  box-shadow: inset 0 0 0 1.5px var(--blue);
+}
+
+.value {
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--ink);
+}
+
+.na {
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+
+.footnote {
+  margin-top: 10px;
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.recruiters {
+  margin-top: 36px;
+}
+
+.h3 {
+  font-size: var(--step-1);
+  margin-bottom: 14px;
+}
+
+.recruiters ul {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.recruiters li {
+  font-family: var(--font-display);
+  font-weight: 550;
+  font-size: 0.92rem;
+  padding: 6px 12px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  transition:
+    background 0.25s var(--ease),
+    transform 0.25s var(--ease);
+}
+
+.recruiters li:hover {
+  background: var(--yellow);
+  transform: translateY(-2px) rotate(-1deg);
+}

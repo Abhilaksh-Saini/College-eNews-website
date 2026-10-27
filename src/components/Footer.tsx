@@ -30,7 +30,7 @@ export function Footer({ edition }: { edition: Edition }) {
               <li key={h.source}>
                 <span className={h.ok ? styles.ok : styles.down} aria-hidden="true" />
                 {h.source}
-                <span className={styles.count}>{h.ok ? `${h.count} items` : "didn't answer"}</span>
+                <span className={styles.count}>{h.ok ? `${h.count} ${h.count === 1 ? "item" : "items"}` : "didn't answer"}</span>
               </li>
             ))}
           </ul>

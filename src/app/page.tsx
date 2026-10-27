@@ -1,6 +1,7 @@
 import { Footer } from "@/components/Footer";
 import { Masthead } from "@/components/Masthead";
 import { NoticeBoard } from "@/components/NoticeBoard";
+import { PlacementDesk } from "@/components/PlacementDesk";
 import { SocialShelf } from "@/components/SocialShelf";
 import { StoryCard } from "@/components/StoryCard";
 import { TechPulse } from "@/components/TechPulse";
@@ -54,6 +55,8 @@ export default async function Home() {
             </div>
           </section>
         )}
+
+        <PlacementDesk desk={edition.placements} brief={edition.placementBrief} />
 
         {videos.length > 0 && (
           <section className={`wrap ${styles.section}`} aria-labelledby="watch-h">

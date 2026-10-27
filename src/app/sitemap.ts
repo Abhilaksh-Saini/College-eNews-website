@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   return [
     { url: base, lastModified: now, changeFrequency: "hourly", priority: 1 },
+    { url: `${base}/placements`, lastModified: now, changeFrequency: "daily" },
     { url: `${base}/tech`, lastModified: now, changeFrequency: "daily" },
     { url: `${base}/about`, lastModified: now, changeFrequency: "monthly" },
     ...CATEGORIES.map((c) => ({

@@ -33,7 +33,7 @@ export function Masthead({ generatedAt, compact = false }: { generatedAt: string
           <ul>
             {CATEGORIES.map((c) => (
               <li key={c.slug}>
-                <Link href={`/section/${c.slug}`}>
+                <Link href={c.slug === "placements" ? "/placements" : `/section/${c.slug}`}>
                   <span className={styles.swatch} style={{ background: INKS[c.slug][0] }} aria-hidden="true" />
                   {c.name}
                 </Link>
