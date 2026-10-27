@@ -1,5 +1,5 @@
 import { CATEGORIES, categorize } from "./categorize";
-import { grokJson, hasGrok } from "./grok";
+import { groqJson, hasGroq } from "./groq";
 import type { Category, Story, TechBrief, TechItem } from "./types";
 
 const SLUGS = CATEGORIES.map((c) => c.slug);
@@ -17,16 +17,16 @@ interface EnrichOut {
   items: { id: string; keep: boolean; category: string; relevance: number; dek: string }[];
 }
 
-/** Keyword-only pass, used without a key and as the base the Grok pass refines. */
+/** Keyword-only pass, used without a key and as the base the Groq pass refines. */
 export function basicEnrich(stories: Story[]): Story[] {
   return stories.map((s) =>
     s.kind === "official" ? s : { ...s, category: categorize(s.title, s.dek) },
   );
 }
 
-export async function grokEnrich(stories: Story[]): Promise<{ stories: Story[]; usedGrok: boolean }> {
+export async function groqEnrich(stories: Story[]): Promise<{ stories: Story[]; usedAI: boolean }> {
   const base = basicEnrich(stories);
-  if (!hasGrok() || !base.length) return { stories: base, usedGrok: false };
+  if (!hasGroq() || !base.length) return { stories: base, usedAI: false };
 
   try {
     const payload = base.slice(0, 40).map((s) => ({
@@ -35,7 +35,7 @@ export async function grokEnrich(stories: Story[]): Promise<{ stories: Story[]; 
       outlet: s.outlet,
       snippet: s.dek.slice(0, 300),
     }));
-    const out = await grokJson<EnrichOut>(ENRICH_SYSTEM, JSON.stringify(payload));
+    const out = await groqJson<EnrichOut>(ENRICH_SYSTEM, JSON.stringify(payload));
     const byId = new Map(out.items.map((i) => [i.id, i]));
 
     const enriched = base.flatMap((s) => {
@@ -51,10 +51,10 @@ export async function grokEnrich(stories: Story[]): Promise<{ stories: Story[]; 
         },
       ];
     });
-    return { stories: enriched, usedGrok: true };
+    return { stories: enriched, usedAI: true };
   } catch (err) {
-    console.error("[enrich] Grok pass failed, using keyword categories:", err);
-    return { stories: base, usedGrok: false };
+    console.error("[enrich] Groq pass failed, using keyword categories:", err);
+    return { stories: base, usedAI: false };
   }
 }
 
@@ -66,10 +66,10 @@ You get today's top technology headlines as JSON (id, title, outlet). Write:
 Rules: describe only what the headlines themselves say. Do not invent figures, quotes, release dates or details that are not in a headline. Say "reportedly" where a headline is a claim. No hype words.
 Reply with JSON only.`;
 
-export async function grokTechBrief(items: TechItem[]): Promise<TechBrief | null> {
-  if (!hasGrok() || items.length < 4) return null;
+export async function groqTechBrief(items: TechItem[]): Promise<TechBrief | null> {
+  if (!hasGroq() || items.length < 4) return null;
   try {
-    const out = await grokJson<Omit<TechBrief, "writtenBy">>(
+    const out = await groqJson<Omit<TechBrief, "writtenBy">>(
       BRIEF_SYSTEM,
       JSON.stringify(items.slice(0, 18).map(({ id, title, outlet }) => ({ id, title, outlet }))),
     );
@@ -79,10 +79,10 @@ export async function grokTechBrief(items: TechItem[]): Promise<TechBrief | null
       headline: String(out.headline),
       paragraphs: out.paragraphs.map(String).slice(0, 4),
       sourceIds: (out.sourceIds ?? []).filter((id) => known.has(id)),
-      writtenBy: "grok",
+      writtenBy: "groq",
     };
   } catch (err) {
-    console.error("[brief] Grok tech brief failed:", err);
+    console.error("[brief] Groq tech brief failed:", err);
     return null;
   }
 }

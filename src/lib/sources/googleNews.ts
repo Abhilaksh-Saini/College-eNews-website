@@ -31,7 +31,7 @@ const MENTIONS_SIT = /symbiosis|\bSIT\b|SITEEE|lavale/i;
 /** Symbiosis-branded schools share the name but aren't part of the university. */
 const NOT_SIU = /symbiosis (international )?school|symbiosis school/i;
 
-/** How specifically a headline is about SIT Pune, before any Grok pass refines it. */
+/** How specifically a headline is about SIT Pune, before the Groq pass refines it. */
 function scoreRelevance(title: string, outlet: string, campus?: string): number {
   if (NOT_SIU.test(title)) return 0.05;
   if (AGGREGATORS.test(outlet) || LISTICLE.test(title)) return 0.15;

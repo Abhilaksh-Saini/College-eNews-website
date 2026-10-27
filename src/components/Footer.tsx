@@ -23,7 +23,7 @@ export function Footer({ edition }: { edition: Edition }) {
           <p className={styles.label}>This edition</p>
           <p className={styles.note}>
             Built {ago(edition.generatedAt)}
-            {edition.enrichedByGrok ? ", summaries by Grok" : ", keyword sorting"}.
+            {edition.enrichedByAI ? ", sorted and summarised with Groq" : ", keyword sorting"}.
           </p>
           <ul className={styles.health}>
             {edition.health.map((h) => (

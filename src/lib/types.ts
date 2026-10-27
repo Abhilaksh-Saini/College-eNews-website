@@ -13,7 +13,7 @@ export interface Story {
   /** Stable id derived from the link, used for dedupe and React keys. */
   id: string;
   title: string;
-  /** One or two plain sentences. Written by Grok when a key is set, else the feed's own snippet. */
+  /** One or two plain sentences. Written by the Groq model when a key is set, else the feed's own snippet. */
   dek: string;
   url: string;
   /** Publication or account name, e.g. "The Indian Express" or "@symbiosis_sit". */
@@ -42,7 +42,7 @@ export interface TechBrief {
   paragraphs: string[];
   /** Ids of TechItems the brief draws on, so readers can check every claim. */
   sourceIds: string[];
-  writtenBy: "grok" | "headlines";
+  writtenBy: "groq" | "headlines";
 }
 
 export interface Edition {
@@ -54,5 +54,5 @@ export interface Edition {
   brief: TechBrief | null;
   /** Which sources answered this run, shown in the footer for transparency. */
   health: { source: string; ok: boolean; count: number }[];
-  enrichedByGrok: boolean;
+  enrichedByAI: boolean;
 }

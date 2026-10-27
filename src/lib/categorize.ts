@@ -18,7 +18,7 @@ const RULES: [Category, RegExp][] = [
   ["events", /fest|hackathon|workshop|webinar|conference|summit|ceremony|convocation|induction|competition|seminar|symposium|celebrat/i],
 ];
 
-/** Keyword fallback used when no Grok key is configured. */
+/** Keyword fallback used when no Groq key is configured. */
 export function categorize(title: string, dek = ""): Category {
   const text = `${title} ${dek}`;
   for (const [cat, re] of RULES) if (re.test(text)) return cat;
