@@ -26,6 +26,8 @@ export interface Story {
   /** Set when the story is about another Symbiosis campus (Hyderabad, Nagpur…). */
   campus?: string;
   image?: string;
+  /** For stories written from a social post: "LinkedIn post", "Instagram post". Shown as the source. */
+  via?: string;
 }
 
 export interface TechItem {

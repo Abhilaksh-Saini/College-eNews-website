@@ -1,10 +1,33 @@
 {
-  "_howto": "Instagram and LinkedIn don't offer a free, allowed way to read a college's posts automatically, so posts are picked by hand here. Add an object to `posts` with the post's link, a one-line title, the account, the date, and optionally a category (admissions, achievements, placements, research, campus, events, notices). Commit the file and Vercel republishes the site.",
+  "_howto": "Paste Instagram or LinkedIn posts here and the site turns each one into a short news story, crediting the post as its source. Each entry needs `url` (the post link) and `account` (who posted it). Add `text` with the post's caption: LinkedIn usually hides posts from servers, so the site can only read the preview on its own when the post is public. Optional: `date` (YYYY-MM-DD), `title` to set the headline yourself, and `category` (admissions, achievements, placements, research, campus, events). Commit the file and Vercel republishes the site.",
   "accounts": [
-    { "network": "Instagram", "handle": "@symbiosis_sit", "url": "https://www.instagram.com/symbiosis_sit/" },
-    { "network": "Instagram", "handle": "@symbiosis_sitpune", "url": "https://www.instagram.com/symbiosis_sitpune/" },
-    { "network": "LinkedIn", "handle": "SIT Pune", "url": "https://www.linkedin.com/in/sitpune/" },
-    { "network": "YouTube", "handle": "Symbiosis Institute of Technology", "url": "https://www.youtube.com/@symbiosisinstituteoftechno5866" }
+    {
+      "network": "Instagram",
+      "handle": "@symbiosis_sit",
+      "url": "https://www.instagram.com/symbiosis_sit/"
+    },
+    {
+      "network": "Instagram",
+      "handle": "@symbiosis_sitpune",
+      "url": "https://www.instagram.com/symbiosis_sitpune/"
+    },
+    {
+      "network": "LinkedIn",
+      "handle": "SIT Pune",
+      "url": "https://www.linkedin.com/in/sitpune/"
+    },
+    {
+      "network": "YouTube",
+      "handle": "Symbiosis Institute of Technology",
+      "url": "https://www.youtube.com/@symbiosisinstituteoftechno5866"
+    }
   ],
-  "posts": []
+  "posts": [],
+  "_example": {
+    "url": "https://www.linkedin.com/posts/sitpune_example-activity-0000000000000000000",
+    "account": "SIT Pune",
+    "date": "2026-10-20",
+    "category": "achievements",
+    "text": "Paste the post's caption here. The site rewrites it as a news item and links back to the post."
+  }
 }
