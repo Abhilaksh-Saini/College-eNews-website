@@ -4,7 +4,8 @@ import { groqEnrich, groqPlacementBrief, groqSocialNews, groqTechBrief } from ".
 import { fetchGoogleNews } from "./sources/googleNews";
 import { fetchSitNotices } from "./sources/sitOfficial";
 import { fetchPlacementDesk, type PlacementDesk } from "./sources/sitPlacements";
-import { getCuratedSocial } from "./sources/social";
+import { getCuratedSocial, type SocialPost } from "./sources/social";
+import { discoverSocialPosts } from "./sources/socialSearch";
 import { fetchTech } from "./sources/tech";
 import { fetchYouTube } from "./sources/youtube";
 import type { Edition, Story, TechItem } from "./types";
@@ -25,6 +26,15 @@ async function settle<T>(source: string, run: () => Promise<T[]>, health: Editio
   }
 }
 
+/**
+ * Social search uses Tavily's free 1,000 searches a month, so it runs at most every 6 hours
+ * (3 searches each time, about 360 a month) rather than with every edition.
+ */
+const cachedSocialSearch = unstable_cache(discoverSocialPosts, ["social-search-v1"], {
+  revalidate: 60 * 60 * 6,
+  tags: ["social"],
+});
+
 async function buildEdition(): Promise<Edition> {
   const health: Edition["health"] = [];
 
@@ -36,8 +46,13 @@ async function buildEdition(): Promise<Edition> {
     settle<PlacementDesk>("SIT placement pages", async () => [await fetchPlacementDesk()], health),
   ]);
   const placements = desks[0] ?? null;
-  const posts = await getCuratedSocial().catch(() => []);
-  health.push({ source: "LinkedIn & Instagram picks", ok: true, count: posts.length });
+  // Posts found automatically through search, plus any picked by hand in content/social.json.
+  const [found, picked] = await Promise.all([
+    settle<SocialPost>("LinkedIn & Instagram (search)", () => cachedSocialSearch(), health),
+    getCuratedSocial().catch(() => [] as SocialPost[]),
+  ]);
+  const pickedUrls = new Set(picked.map((p) => p.url));
+  const posts = [...picked, ...found.filter((p) => !pickedUrls.has(p.url))].slice(0, 24);
 
   const [{ stories: enriched, usedAI }, brief, placementBrief, social] = await Promise.all([
     groqEnrich(dedupe(press)),
