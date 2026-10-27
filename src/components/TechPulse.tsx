@@ -16,9 +16,11 @@ export function TechPulse({
   items: TechItem[];
   full?: boolean;
 }) {
-  const sources = brief?.sourceIds.length
-    ? items.filter((i) => brief.sourceIds.includes(i.id))
-    : items.slice(0, full ? 20 : 8);
+  const sources = full
+    ? items
+    : brief?.sourceIds.length
+      ? items.filter((i) => brief.sourceIds.includes(i.id))
+      : items.slice(0, 8);
 
   return (
     <section className={styles.band} aria-labelledby="tech-h">
