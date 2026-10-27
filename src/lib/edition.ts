@@ -108,7 +108,8 @@ export function getEdition(): Promise<Edition> {
 export function pickLead(stories: Story[]): Story | undefined {
   const twoWeeks = Date.now() - 14 * 864e5;
   const recent = stories.filter((s) => s.kind === "press" && Date.parse(s.publishedAt) > twoWeeks);
-  const press = stories.filter((s) => s.kind === "press");
+  // Press stories and SIT's own social posts (rewritten as news) can both lead.
+  const press = stories.filter((s) => s.kind === "press" || s.kind === "social");
   // Prefer a story that's clearly about SIT Pune, even if a slightly older one.
   const onCampus = press.filter((s) => s.relevance >= 0.8 && Date.parse(s.publishedAt) > Date.now() - 60 * 864e5);
   const pool = onCampus.length ? onCampus : recent.length ? recent : press;
