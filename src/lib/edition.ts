@@ -1,6 +1,6 @@
 import { unstable_cache } from "next/cache";
 import { dedupe } from "./categorize";
-import { groqEnrich, groqPlacementBrief, groqTechBrief } from "./enrich";
+import { groqEnrich, groqPlacementBrief, groqSocialNews, groqTechBrief } from "./enrich";
 import { fetchGoogleNews } from "./sources/googleNews";
 import { fetchSitNotices } from "./sources/sitOfficial";
 import { fetchPlacementDesk, type PlacementDesk } from "./sources/sitPlacements";
@@ -36,13 +36,14 @@ async function buildEdition(): Promise<Edition> {
     settle<PlacementDesk>("SIT placement pages", async () => [await fetchPlacementDesk()], health),
   ]);
   const placements = desks[0] ?? null;
-  const social = getCuratedSocial();
-  health.push({ source: "Curated social", ok: true, count: social.length });
+  const posts = await getCuratedSocial().catch(() => []);
+  health.push({ source: "LinkedIn & Instagram picks", ok: true, count: posts.length });
 
-  const [{ stories: enriched, usedAI }, brief, placementBrief] = await Promise.all([
+  const [{ stories: enriched, usedAI }, brief, placementBrief, social] = await Promise.all([
     groqEnrich(dedupe(press)),
     groqTechBrief(tech),
     groqPlacementBrief(placements),
+    groqSocialNews(posts),
   ]);
 
   // Low-relevance listicles stay out unless there's almost nothing else to show.
@@ -71,7 +72,7 @@ async function buildEdition(): Promise<Edition> {
  * One cached edition shared by every page, so a regeneration fetches each source and calls
  * Groq once, no matter how many routes are being rebuilt.
  */
-const cachedEdition = unstable_cache(buildEdition, ["edition-v3"], {
+const cachedEdition = unstable_cache(buildEdition, ["edition-v4"], {
   revalidate: EDITION_TTL,
   tags: [EDITION_TAG],
 });

@@ -1,6 +1,7 @@
 import { CATEGORIES, categorize } from "./categorize";
 import { groqJson, hasGroq } from "./groq";
 import type { PlacementDesk } from "./sources/sitPlacements";
+import type { SocialPost } from "./sources/social";
 import type { Category, PlacementBrief, Story, TechBrief, TechItem } from "./types";
 
 const SLUGS = CATEGORIES.map((c) => c.slug);
@@ -107,6 +108,52 @@ export async function groqPlacementBrief(desk: PlacementDesk | null): Promise<Pl
   } catch (err) {
     console.error("[placements] Groq brief failed:", err);
     return null;
+  }
+}
+
+const SOCIAL_SYSTEM = `You turn social media posts by Symbiosis Institute of Technology (SIT), Pune and its departments, clubs and students into short news items for a student news site.
+You get posts as JSON (id, account, network, text). For each return:
+- "id": unchanged
+- "headline": a plain news headline, max 14 words, in the third person, no emojis, no hashtags, no colon
+- "dek": 1-2 sentences of news, at most 45 words, saying who did what, when and where, based ONLY on the post text. Attribute it, e.g. "according to a LinkedIn post by SIT Pune".
+- "category": one of ${SLUGS.filter((s) => s !== "notices").join(", ")}
+Rules: never invent names, numbers, dates, companies or quotes that are not in the post. Drop hype and hashtags. If the post has no real news (only greetings or a festival wish), set "headline" to "" to skip it.
+Reply with JSON: {"items": [...]}`;
+
+interface SocialOut {
+  items: { id: string; headline: string; dek: string; category: string }[];
+}
+
+/** Rewrites hand-picked social posts as news items, each still linking to the post as its source. */
+export async function groqSocialNews(posts: SocialPost[]): Promise<Story[]> {
+  const strip = (p: SocialPost): Story => {
+    const { postText: _postText, ...story } = p;
+    return story;
+  };
+  const withText = posts.filter((p) => p.postText);
+  if (!hasGroq() || !withText.length) return posts.map(strip);
+  try {
+    const out = await groqJson<SocialOut>(
+      SOCIAL_SYSTEM,
+      JSON.stringify(withText.map((p) => ({ id: p.id, account: p.outlet, network: p.via, text: p.postText }))),
+    );
+    const byId = new Map(out.items.map((i) => [i.id, i]));
+    return posts.flatMap((p) => {
+      const e = byId.get(p.id);
+      if (!e) return [strip(p)];
+      if (!e.headline?.trim()) return [];
+      return [
+        {
+          ...strip(p),
+          title: e.headline.trim(),
+          dek: (e.dek ?? "").trim() || p.dek,
+          category: SLUGS.includes(e.category as Category) ? (e.category as Category) : p.category,
+        },
+      ];
+    });
+  } catch (err) {
+    console.error("[social] Groq rewrite failed, showing posts as written:", err);
+    return posts.map(strip);
   }
 }
 
