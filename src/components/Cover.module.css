@@ -1,0 +1,35 @@
+.cover {
+  position: relative;
+  aspect-ratio: 400 / 260;
+  background: #fff;
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+.cover svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.plateA,
+.plateB {
+  mix-blend-mode: multiply;
+  transition: transform 0.5s var(--ease);
+}
+
+/* Printed slightly out of register at rest… */
+.plateA {
+  transform: translate(-3px, 2px);
+}
+.plateB {
+  transform: translate(4px, -2px);
+}
+
+/* …and pulled into register when the story is hovered or focused. */
+a:hover .plateA,
+a:hover .plateB,
+a:focus-visible .plateA,
+a:focus-visible .plateB {
+  transform: translate(0, 0);
+}
