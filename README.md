@@ -12,7 +12,7 @@ It's version 2 of our college e-news project. The original React + Express site 
 | *On the notice board* | Announcements on [sitpune.edu.in](https://www.sitpune.edu.in/) | Free |
 | *Watch* | SIT Pune's YouTube channel feed | Free, no key |
 | *Tech Pulse* | Hacker News API and Google News' India technology section, with a short brief written by Llama 3.3 on Groq | Free; Groq is optional |
-| News from social posts | Instagram and LinkedIn posts you pick, rewritten as news with the post as source | Free |
+| News from social posts | Public LinkedIn and Instagram posts found through Tavily search, rewritten as news with the post as source | Free (1,000 searches/month) |
 | *Placements desk* | SIT's own placement records, season report and recruiter list | Free |
 
 Every story links to its original source. The footer of each edition shows when it was built and which sources answered.
@@ -30,24 +30,16 @@ Without a key, the site still works: it sorts with keyword rules and shows the t
 
 An edition makes two small calls and is rebuilt at most every three hours, which sits well inside Groq's free tier, so the whole pipeline costs nothing. Set `GROQ_MODEL` to try another Groq model, such as `openai/gpt-oss-120b`.
 
-### Instagram and LinkedIn posts as news
+### Instagram and LinkedIn posts, found automatically
 
-Neither network offers a free, permitted way for another site to read a college's posts automatically, and scraping them breaks their terms and gets blocked. So posts are picked by hand: paste a post into [`content/social.json`](content/social.json) and the site turns it into a short news story, crediting the post as its source.
+The site finds public LinkedIn and Instagram posts about SIT Pune by itself. Neither network lets other sites read posts directly, and scraping them breaks their terms, so it searches what search engines have already indexed, using [Tavily](https://tavily.com)'s search API:
 
-```json
-{
-  "url": "https://www.linkedin.com/posts/sitpune_...",
-  "account": "SIT Pune",
-  "date": "2026-10-20",
-  "text": "Paste the post's caption here."
-}
-```
+- Three searches run at most every 6 hours (about 360 a month), inside Tavily's free 1,000 a month. No card needed.
+- Only individual posts that mention SIT are kept. Profiles, company pages, job ads and unrelated posts are dropped.
+- Every link comes from the search index, never from the AI, so a post can't be invented.
+- Groq rewrites each post as a plain news headline and summary using only the post's words, skips posts with no news in them, and the story credits the post as its source ("Source: LinkedIn post by SIT Pune").
 
-- `url` and `account` are required. `date`, `category` and `title` are optional.
-- `text` is the post's caption. For public Instagram posts the site can read the caption from the link preview, so it can be left out. LinkedIn usually hides posts from servers, so paste the text for those.
-- With a Groq key, the post is rewritten as a plain news headline and summary using only what the post says, and drops posts with no news in them (festival wishes, greetings). Without a key, the headline comes from the post's first full sentence.
-
-Commit the file and Vercel republishes the site within a minute.
+Nothing needs entering by hand. If search ever misses a post you want, you can force-include it in [`content/social.json`](content/social.json).
 
 ## How updates happen
 
@@ -74,6 +66,7 @@ visitor or daily cron ──► Vercel serves the cached page
 2. Leave the framework as **Next.js** and the root directory as the repo root.
 3. Under **Environment Variables**, add:
    - `GROQ_API_KEY` — a free key from [console.groq.com/keys](https://console.groq.com/keys) (optional)
+   - `TAVILY_API_KEY` — a free key from [app.tavily.com](https://app.tavily.com), so the site can find LinkedIn and Instagram posts
    - `CRON_SECRET` — any long random string, so only Vercel can trigger refreshes
    - `NEXT_PUBLIC_SITE_URL` — your site's URL once you know it, e.g. `https://the-hilltop.vercel.app`
 4. Deploy. Every push to `main` redeploys automatically.

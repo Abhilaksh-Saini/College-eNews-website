@@ -1,5 +1,5 @@
 {
-  "_howto": "Paste Instagram or LinkedIn posts here and the site turns each one into a short news story, crediting the post as its source. Each entry needs `url` (the post link) and `account` (who posted it). Add `text` with the post's caption: LinkedIn usually hides posts from servers, so the site can only read the preview on its own when the post is public. Optional: `date` (YYYY-MM-DD), `title` to set the headline yourself, and `category` (admissions, achievements, placements, research, campus, events). Commit the file and Vercel republishes the site.",
+  "_howto": "Optional. The site finds public LinkedIn and Instagram posts about SIT Pune by itself through search (needs TAVILY_API_KEY). Use this list only to force-include a post search missed: `url` and `account` are required; add `text` with the caption for LinkedIn posts, and optionally `date`, `title`, `category`.",
   "accounts": [
     {
       "network": "Instagram",

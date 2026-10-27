@@ -39,9 +39,9 @@ export default async function AboutPage() {
               <strong>SIT&apos;s YouTube channel.</strong> The latest uploads, with their own thumbnails.
             </li>
             <li>
-              <strong>Instagram and LinkedIn.</strong> Posts from SIT&apos;s accounts are picked by hand, since these
-              networks don&apos;t let other sites read them automatically. Each one is rewritten as a short news item
-              from the post&apos;s own words and credits the post as its source.
+              <strong>Instagram and LinkedIn.</strong> Public posts about SIT are found automatically through a search
+              engine&apos;s index, since the networks themselves don&apos;t let other sites read them. Each one is
+              rewritten as a short news item from the post&apos;s own words and credits the post as its source.
             </li>
             <li>
               <strong>Tech Pulse.</strong> Top stories from Hacker News and the Indian tech press.
