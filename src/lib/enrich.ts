@@ -48,7 +48,8 @@ export async function groqEnrich(stories: Story[]): Promise<{ stories: Story[]; 
         {
           ...s,
           category: SLUGS.includes(e.category as Category) ? (e.category as Category) : s.category,
-          relevance: clamp(Number(e.relevance), s.relevance),
+          // Admission portals and fee guides stay demoted even if the model rates them highly.
+          relevance: s.relevance <= 0.15 ? Math.min(s.relevance, clamp(Number(e.relevance), s.relevance)) : clamp(Number(e.relevance), s.relevance),
           dek: typeof e.dek === "string" && e.dek.trim() ? e.dek.trim() : s.dek,
         },
       ];
