@@ -11,7 +11,7 @@ It's version 2 of our college e-news project. The original React + Express site 
 | Lead story and *Latest from the foothill* | Google News RSS searches for SIT Pune and Symbiosis | Free, no key |
 | *On the notice board* | Announcements on [sitpune.edu.in](https://www.sitpune.edu.in/) | Free |
 | *Watch* | SIT Pune's YouTube channel feed | Free, no key |
-| *Tech Pulse* | Hacker News API and Google News' India technology section, with a short brief written by Llama 3.3 on Groq | Free; Groq is optional |
+| *Tech Pulse* | Hacker News API and Google News' India technology section, with a short brief written by Qwen 3.8 on Groq | Free; Groq is optional |
 | News from social posts | Public LinkedIn and Instagram posts found through Tavily search, rewritten as news with the post as source | Free (1,000 searches/month) |
 | *Placements desk* | SIT's own placement records, season report and recruiter list | Free |
 
@@ -19,7 +19,7 @@ Every story links to its original source. The footer of each edition shows when 
 
 ### What the AI does (optional, free)
 
-With a free [Groq](https://console.groq.com) API key set, the site uses Meta's Llama 3.3 70B to:
+With a free [Groq](https://console.groq.com) API key set, the site uses Qwen 3.8, Groq's newest open model, to:
 
 - sort each story into a section (Campus, Wins, Placements, Research, Events, Admissions),
 - drop admission-portal listicles and stories that only mention SIT in passing,
@@ -28,7 +28,7 @@ With a free [Groq](https://console.groq.com) API key set, the site uses Meta's L
 
 Without a key, the site still works: it sorts with keyword rules and shows the tech headlines as a plain list.
 
-An edition makes two small calls and is rebuilt at most every three hours, which sits well inside Groq's free tier, so the whole pipeline costs nothing. Set `GROQ_MODEL` to try another Groq model, such as `openai/gpt-oss-120b`.
+An edition makes two small calls and is rebuilt at most every three hours, which sits well inside Groq's free tier, so the whole pipeline costs nothing. If Groq ever retires Qwen 3.8, the site falls back to `openai/gpt-oss-120b` by itself, so summaries keep working. Set `GROQ_MODEL` to put a different model first.
 
 ### Instagram and LinkedIn posts, found automatically
 

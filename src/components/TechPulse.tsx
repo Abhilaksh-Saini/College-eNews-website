@@ -38,7 +38,7 @@ export function TechPulse({
                 ))}
               </div>
               <p className={styles.credit}>
-                Written by an AI model (Llama 3.3, run on Groq) from the headlines listed here. Open the sources before you quote anything.
+                Written by an AI model (Qwen 3.8, run on Groq) from the headlines listed here. Open the sources before you quote anything.
               </p>
             </>
           ) : (

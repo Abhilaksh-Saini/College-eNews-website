@@ -82,7 +82,7 @@ export function PlacementDesk({
                 </p>
               ))}
               <p className={styles.credit}>
-                Written by an AI model (Llama 3.3, run on Groq) from SIT&apos;s published figures. Check the linked pages
+                Written by an AI model (Qwen 3.8, run on Groq) from SIT&apos;s published figures. Check the linked pages
                 before quoting.
               </p>
             </>

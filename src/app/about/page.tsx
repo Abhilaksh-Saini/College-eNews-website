@@ -50,7 +50,7 @@ export default async function AboutPage() {
 
           <h2>What the AI does</h2>
           <p>
-            An open AI model (Meta&apos;s Llama 3.3, run on Groq&apos;s free API) sorts stories into sections, drops admission-portal listicles that only
+            An open AI model (Qwen 3.8, run on Groq&apos;s free API) sorts stories into sections, drops admission-portal listicles that only
             mention SIT in passing, and writes the one-line summary under each headline using only what the headline
             and the outlet&apos;s own snippet say. It also writes the short Tech Pulse brief from that day&apos;s
             headlines, and rewrites hand-picked social posts as news using only what the post says. It doesn&apos;t
