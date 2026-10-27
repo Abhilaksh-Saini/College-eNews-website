@@ -24,10 +24,23 @@ interface RssItem {
 }
 
 /** Admission-portal listicles rank well in search but rarely carry campus news. */
-const AGGREGATORS = /shiksha|careers360|collegedunia|collegedekho|getmyuni|adda247|jagran josh|zollege|collegesearch|admissionbuddy|leverage edu/i;
+const AGGREGATORS = /shiksha|careers360|collegedunia|collegedekho|getmyuni|adda247|jagran josh|zollege|collegesearch|admissionbuddy|leverage edu|jaro education|^pw$|upgrad|online manipal|distance education/i;
+/** Comparison and fee-guide headlines are marketing, not news. */
+const LISTICLE = /\bvs\.?\b|\bfees?\b|cut-?off|which .* should you|top \d+|list of|best .* colleges|online mba|online msc|course details/i;
 const MENTIONS_SIT = /symbiosis|\bSIT\b|SITEEE|lavale/i;
+/** Symbiosis-branded schools share the name but aren't part of the university. */
+const NOT_SIU = /symbiosis (international )?school|symbiosis school/i;
 
-const OTHER_CAMPUSES = ["Hyderabad", "Nagpur", "Noida", "Nashik", "Bengaluru", "Bangalore"];
+/** How specifically a headline is about SIT Pune, before any Grok pass refines it. */
+function scoreRelevance(title: string, outlet: string, campus?: string): number {
+  if (NOT_SIU.test(title)) return 0.05;
+  if (AGGREGATORS.test(outlet) || LISTICLE.test(title)) return 0.15;
+  if (/symbiosis institute of technology|sit,? pune|sitpune|siteee|lavale/i.test(title)) return campus ? 0.5 : 0.9;
+  if (campus) return 0.3;
+  return 0.5;
+}
+
+const OTHER_CAMPUSES = ["Dubai", "Hyderabad", "Nagpur", "Noida", "Nashik", "Bengaluru", "Bangalore"];
 
 export function detectCampus(text: string): string | undefined {
   if (/\bpune\b|lavale/i.test(text)) return undefined;
@@ -50,11 +63,13 @@ export async function fetchGoogleNews(): Promise<Story[]> {
 
     for (const it of items) {
       if (!it.title || !it.link) continue;
-      const outlet =
+      const rawOutlet =
         typeof it.source === "string" ? it.source : it.source?.["#text"] ?? "News";
+      // Some sources report their name as a bare URL ("https://hrtoday.in/").
+      const outlet = rawOutlet.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
       if (!MENTIONS_SIT.test(String(it.title))) continue;
       // Google appends " - Outlet" to every title; drop it, the outlet is shown separately.
-      const title = stripHtml(String(it.title)).replace(new RegExp(`\\s+-\\s+${escapeRe(outlet)}$`), "");
+      const title = stripHtml(String(it.title)).replace(new RegExp(`\\s+-\\s+${escapeRe(rawOutlet)}$`), "");
       const snippet = stripHtml(String(it.description ?? ""));
       const dek = snippet && !snippet.startsWith(title) ? snippet : "";
 
@@ -67,11 +82,7 @@ export async function fetchGoogleNews(): Promise<Story[]> {
         kind: "press",
         category: "campus",
         publishedAt: it.pubDate ? new Date(it.pubDate).toISOString() : new Date().toISOString(),
-        relevance: AGGREGATORS.test(outlet)
-          ? 0.15
-          : /symbiosis institute of technology|sit pune|sitpune|siteee/i.test(title)
-            ? 0.9
-            : 0.5,
+        relevance: scoreRelevance(title, outlet, detectCampus(title)),
         campus: detectCampus(title),
       });
     }
