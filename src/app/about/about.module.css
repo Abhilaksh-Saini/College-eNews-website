@@ -1,0 +1,45 @@
+.page {
+  padding-top: clamp(28px, 5vw, 56px);
+}
+
+.page h1 {
+  font-size: clamp(var(--step-4), 7vw, 5rem);
+  font-variation-settings: "wdth" 80, "opsz" 96;
+  letter-spacing: -0.035em;
+}
+
+.body {
+  max-width: var(--measure);
+  margin-top: 24px;
+  display: grid;
+  gap: 16px;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.lede {
+  font-size: var(--step-1);
+  line-height: 1.55;
+}
+
+.body h2 {
+  margin-top: 22px;
+  font-size: var(--step-2);
+  font-variation-settings: "wdth" 85;
+}
+
+.body ul {
+  margin: 0;
+  padding-left: 1.1em;
+  display: grid;
+  gap: 10px;
+}
+
+.body li::marker {
+  color: var(--pink);
+}
+
+.body strong {
+  font-family: var(--font-display);
+  font-weight: 650;
+}
