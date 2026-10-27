@@ -16,6 +16,9 @@ const literata = Literata({
   style: ["normal", "italic"],
 });
 
+/** Building an edition (searches, page previews, AI passes) can take ~40s; give it room on Vercel. */
+export const maxDuration = 120;
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export const metadata: Metadata = {

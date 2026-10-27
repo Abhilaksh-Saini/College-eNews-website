@@ -41,7 +41,9 @@ export default async function AboutPage() {
             <li>
               <strong>Instagram and LinkedIn.</strong> Public posts about SIT are found automatically through a search
               engine&apos;s index, since the networks themselves don&apos;t let other sites read them. Each one is
-              rewritten as a short news item from the post&apos;s own words and credits the post as its source.
+              rewritten as a short news item from the post&apos;s own words, shows the post&apos;s own photos, and
+              credits the post as its source. This includes the Training &amp; Placement Cell&apos;s page, for
+              drives, offers and internships.
             </li>
             <li>
               <strong>Tech Pulse.</strong> Top stories from Hacker News and the Indian tech press.

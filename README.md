@@ -39,6 +39,9 @@ The site finds public LinkedIn and Instagram posts about SIT Pune by itself. Nei
 - Every link comes from the search index, never from the AI, so a post can't be invented.
 - Groq rewrites each post as a plain news headline and summary using only the post's words, skips posts with no news in them, and the story credits the post as its source ("Source: LinkedIn post by SIT Pune").
 
+- SIT's Training & Placement Cell page (`placement-cell-sit`) is searched separately, so placement drives, offers and internships show up as news.
+- Each story shows the post's own pictures, read from its public link preview (only the post's images, never profile photos of the poster or commenters). Qwen 3.8's vision sorts them so real photos come before posters and certificates, and stories with real photos are preferred for the lead. Graphics still show when a post has nothing else.
+
 Nothing needs entering by hand. If search ever misses a post you want, you can force-include it in [`content/social.json`](content/social.json).
 
 ## How updates happen
