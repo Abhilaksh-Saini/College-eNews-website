@@ -1,4 +1,4 @@
-import { fetchText, hashId, stripHtml } from "../fetcher";
+import { fetchPolite, hashId, stripHtml } from "../fetcher";
 import type { Story } from "../types";
 
 const HOME = "https://www.sitpune.edu.in/";
@@ -15,7 +15,7 @@ const STANDING =
  * The site has no feed, so this is a light, polite scrape of one page per edition.
  */
 export async function fetchSitNotices(): Promise<Story[]> {
-  const html = (await fetchText(HOME, 10000)).replace(/<!--[\s\S]*?-->/g, "");
+  const html = (await fetchPolite(HOME)).replace(/<!--[\s\S]*?-->/g, "");
   const seen = new Set<string>();
   const notices: Story[] = [];
   const now = new Date().toISOString();

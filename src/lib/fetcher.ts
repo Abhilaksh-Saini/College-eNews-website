@@ -23,6 +23,26 @@ export async function fetchText(url: string, timeoutMs = 8000, init: RequestInit
   }
 }
 
+/**
+ * sitpune.edu.in is a small server that answers bursts of requests with 503.
+ * Requests to it are queued one at a time, and a 503 gets one retry after a short pause.
+ */
+let politeQueue: Promise<unknown> = Promise.resolve();
+export function fetchPolite(url: string, timeoutMs = 15000): Promise<string> {
+  const run = async () => {
+    try {
+      return await fetchText(url, timeoutMs);
+    } catch (err) {
+      if (!/\b(503|502|429)\b/.test(String(err))) throw err;
+      await new Promise((r) => setTimeout(r, 2000));
+      return fetchText(url, timeoutMs);
+    }
+  };
+  const next = politeQueue.then(run, run);
+  politeQueue = next.catch(() => undefined);
+  return next;
+}
+
 export async function fetchJson<T>(url: string, timeoutMs = 8000, init: RequestInit = {}): Promise<T> {
   return JSON.parse(await fetchText(url, timeoutMs, init)) as T;
 }

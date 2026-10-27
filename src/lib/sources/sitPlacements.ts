@@ -1,4 +1,4 @@
-import { fetchText, stripHtml } from "../fetcher";
+import { fetchPolite, stripHtml } from "../fetcher";
 
 const BASE = "https://www.sitpune.edu.in/";
 
@@ -103,9 +103,9 @@ export async function fetchPlacementDesk(): Promise<PlacementDesk> {
     recruiters: BASE + "placement-list-recruiters",
   };
   const [record, overview, recruiters] = await Promise.allSettled([
-    fetchText(pages.record, 12000),
-    fetchText(pages.overview, 12000),
-    fetchText(pages.recruiters, 12000),
+    fetchPolite(pages.record),
+    fetchPolite(pages.overview),
+    fetchPolite(pages.recruiters),
   ]);
   const ok = (r: PromiseSettledResult<string>) => (r.status === "fulfilled" ? r.value : "");
 
