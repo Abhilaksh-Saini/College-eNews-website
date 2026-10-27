@@ -1,0 +1,86 @@
+.front {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+  gap: clamp(28px, 4vw, 56px);
+  padding-top: clamp(28px, 4vw, 48px);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .front {
+    grid-template-columns: 1fr;
+  }
+}
+
+.empty {
+  padding: 32px;
+  border: 2px dashed var(--rule);
+  border-radius: 4px;
+}
+.empty h2 {
+  font-size: var(--step-2);
+}
+.empty p {
+  margin-top: 10px;
+  max-width: 52ch;
+  color: var(--ink-soft);
+}
+
+.section {
+  margin-top: clamp(48px, 7vw, 88px);
+}
+
+.h2 {
+  font-size: var(--step-3);
+  font-variation-settings: "wdth" 85;
+  padding-bottom: 14px;
+  margin-bottom: 26px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px 32px;
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Videos scroll sideways on small screens rather than stacking six tall cards. */
+.strip {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(240px, 1fr);
+  gap: 24px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scroll-snap-type: x mandatory;
+}
+.strip > * {
+  scroll-snap-align: start;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 48px;
+}
+.list > * {
+  padding-block: 16px;
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (max-width: 720px) {
+  .list {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,61 @@
+.shelf {
+  margin-block: clamp(48px, 7vw, 88px);
+}
+
+.head h2 {
+  font-size: var(--step-3);
+  font-variation-settings: "wdth" 85;
+}
+
+.accounts {
+  list-style: none;
+  padding: 0;
+  margin: 22px 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.accounts a {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  padding: 16px 18px;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--paper);
+  transition:
+    transform 0.3s var(--ease),
+    box-shadow 0.3s var(--ease);
+}
+
+/* Each account card lifts off a block of its network's ink. */
+.accounts a:hover,
+.accounts a:focus-visible {
+  transform: translate(-4px, -4px);
+  box-shadow: 4px 4px 0 var(--net);
+}
+
+.network {
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--net);
+  filter: brightness(0.85);
+}
+
+.handle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-1);
+  line-height: 1.2;
+}
+
+.posts {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 28px 32px;
+}

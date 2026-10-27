@@ -1,0 +1,79 @@
+import type { Metadata } from "next";
+import { Footer } from "@/components/Footer";
+import { Masthead } from "@/components/Masthead";
+import { getEdition } from "@/lib/edition";
+import styles from "./about.module.css";
+
+export const revalidate = 10800;
+
+export const metadata: Metadata = {
+  title: "How this works",
+  description: "Where The Foothill's stories come from, how often it updates, and what the AI does and doesn't write.",
+};
+
+export default async function AboutPage() {
+  const edition = await getEdition();
+  return (
+    <>
+      <Masthead generatedAt={edition.generatedAt} compact />
+      <main id="main" className={`wrap ${styles.page}`}>
+        <h1>How this works</h1>
+
+        <div className={styles.body}>
+          <p className={styles.lede}>
+            The Foothill is a student-built news site for Symbiosis Institute of Technology, Pune. Nobody types the
+            stories in. Every few hours the site goes out, reads what&apos;s been published about SIT, and lays out a
+            new edition.
+          </p>
+
+          <h2>Where stories come from</h2>
+          <ul>
+            <li>
+              <strong>The press.</strong> Google News searches for SIT Pune and Symbiosis across Indian outlets.
+              Headlines link to the original article.
+            </li>
+            <li>
+              <strong>The institute.</strong> Notices and announcements posted on sitpune.edu.in.
+            </li>
+            <li>
+              <strong>SIT&apos;s YouTube channel.</strong> The latest uploads, with their own thumbnails.
+            </li>
+            <li>
+              <strong>Instagram and LinkedIn.</strong> Public posts about SIT are found automatically through a search
+              engine&apos;s index, since the networks themselves don&apos;t let other sites read them. Each one is
+              rewritten as a short news item from the post&apos;s own words, shows the post&apos;s own photos, and
+              credits the post as its source. This includes the Training &amp; Placement Cell&apos;s page, for
+              drives, offers and internships.
+            </li>
+            <li>
+              <strong>Tech Pulse.</strong> Top stories from Hacker News and the Indian tech press.
+            </li>
+          </ul>
+
+          <h2>What the AI does</h2>
+          <p>
+            An open AI model (Qwen 3.8, run on Groq&apos;s free API) sorts stories into sections, drops admission-portal listicles that only
+            mention SIT in passing, and writes the one-line summary under each headline using only what the headline
+            and the outlet&apos;s own snippet say. It also writes the short Tech Pulse brief from that day&apos;s
+            headlines, and rewrites hand-picked social posts as news using only what the post says. It doesn&apos;t
+            invent news about SIT. If something reads wrong, the original source is one
+            click away.
+          </p>
+
+          <h2>How often it updates</h2>
+          <p>
+            A new edition is built at most every three hours when people are reading, and once every morning
+            regardless. The footer shows when this edition was built and which sources answered.
+          </p>
+
+          <h2>Corrections</h2>
+          <p>
+            This isn&apos;t an official SIT publication. To correct or remove something, open an issue on{" "}
+            <a href="https://github.com/mardromus/the-foothill/issues">the project&apos;s GitHub</a>.
+          </p>
+        </div>
+      </main>
+      <Footer edition={edition} />
+    </>
+  );
+}

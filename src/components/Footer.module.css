@@ -1,0 +1,79 @@
+.foot {
+  margin-top: clamp(56px, 8vw, 100px);
+  padding-block: 40px 56px;
+  border-top: 2px solid var(--ink);
+  background: var(--paper-deep);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 32px 64px;
+}
+
+@media (max-width: 720px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-variation-settings: "wdth" 75;
+  font-size: var(--step-3);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.label {
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.note {
+  margin-top: 10px;
+  max-width: 58ch;
+  color: var(--ink-soft);
+  font-size: 0.97rem;
+}
+
+.note a {
+  color: var(--ink);
+}
+
+.health {
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 0;
+  display: grid;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+}
+
+.health li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.count {
+  margin-left: auto;
+  color: var(--ink-soft);
+}
+
+.ok,
+.down {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex: none;
+}
+.ok {
+  background: var(--green);
+}
+.down {
+  background: transparent;
+  border: 2px solid var(--pink);
+}
