@@ -113,5 +113,7 @@ export function pickLead(stories: Story[]): Story | undefined {
   // Prefer a story that's clearly about SIT Pune, even if a slightly older one.
   const onCampus = press.filter((s) => s.relevance >= 0.8 && Date.parse(s.publishedAt) > Date.now() - 60 * 864e5);
   const pool = onCampus.length ? onCampus : recent.length ? recent : press;
-  return [...pool].sort((a, b) => b.relevance - a.relevance || b.publishedAt.localeCompare(a.publishedAt))[0];
+  // A story with a real photo makes a better lead than a poster or a generated print.
+  const score = (s: Story) => s.relevance + (s.imageKind === "photo" ? 0.3 : s.image ? 0.05 : 0);
+  return [...pool].sort((a, b) => score(b) - score(a) || b.publishedAt.localeCompare(a.publishedAt))[0];
 }

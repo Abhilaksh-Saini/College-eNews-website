@@ -89,3 +89,40 @@ export async function groqJson<T>(system: string, user: string, timeoutMs = 2500
   }
   throw lastError ?? new Error("No Groq model available");
 }
+
+/** Asks Qwen 3.8 (vision) a question about up to 3 images at once (Groq's limit) and parses a JSON reply. */
+export async function groqVision<T>(question: string, imageUrls: string[], timeoutMs = 30000): Promise<T> {
+  const key = groqKey();
+  if (!key) throw new Error("No Groq key set (GROQ_API_KEY)");
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+  try {
+    const res = await fetch(ENDPOINT, {
+      method: "POST",
+      signal: ctrl.signal,
+      cache: "no-store",
+      headers: { "content-type": "application/json", authorization: `Bearer ${key}` },
+      body: JSON.stringify({
+        model: process.env.GROQ_VISION_MODEL || "qwen/qwen3.8-27b",
+        reasoning_format: "hidden",
+        temperature: 0,
+        response_format: { type: "json_object" },
+        messages: [
+          {
+            role: "user",
+            content: [
+              { type: "text", text: question },
+              ...imageUrls.slice(0, 3).map((url) => ({ type: "image_url", image_url: { url } })),
+            ],
+          },
+        ],
+      }),
+    });
+    if (!res.ok) throw new Error(`Groq vision ${res.status}: ${(await res.text()).slice(0, 200)}`);
+    const data = (await res.json()) as { choices?: { message?: { content?: string } }[] };
+    const text = data.choices?.[0]?.message?.content ?? "";
+    return JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf("}") + 1)) as T;
+  } finally {
+    clearTimeout(timer);
+  }
+}
