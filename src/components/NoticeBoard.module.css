@@ -1,0 +1,80 @@
+.board {
+  background: var(--paper-deep);
+  padding: 22px 20px 26px;
+  border-radius: 4px;
+}
+
+.heading {
+  font-size: var(--step-2);
+  font-variation-settings: "wdth" 85;
+}
+
+.sub {
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+.slips {
+  list-style: none;
+  padding: 0;
+  margin: 22px 0 0;
+  display: grid;
+  gap: 16px;
+}
+
+.slip {
+  position: relative;
+  display: block;
+  padding: 16px 16px 14px;
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-weight: 550;
+  font-size: 1rem;
+  line-height: 1.35;
+  transform: rotate(var(--tilt, 0deg));
+  box-shadow: 0 1px 0 var(--rule);
+  transition:
+    transform 0.35s var(--ease),
+    box-shadow 0.35s var(--ease);
+}
+
+/* A strip of yellow tape holding each slip up. */
+.slip::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: calc(50% - 28px);
+  width: 56px;
+  height: 16px;
+  background: var(--yellow);
+  opacity: 0.85;
+  mix-blend-mode: multiply;
+  transform: rotate(calc(var(--tilt, 0deg) * -2));
+}
+
+.slip:hover,
+.slip:focus-visible {
+  transform: rotate(0deg) translateY(-3px);
+  box-shadow: 4px 6px 0 var(--pink);
+}
+
+.kind {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--blue);
+  border: 1.5px solid currentColor;
+  border-radius: 3px;
+  vertical-align: 2px;
+}
+
+.empty {
+  margin-top: 16px;
+  color: var(--ink-soft);
+}
